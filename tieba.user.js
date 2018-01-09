@@ -1,10 +1,11 @@
 // ==UserScript==
-// @name         New Userscript
+// @name         tieba
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  try to take over the world!
+// @description  自动签到并屏蔽右侧广告（话题列表、会员、下载app、推荐应用、大家都在搜）
 // @author       lfeng
 // @match        *://tieba.baidu.com/*
+// @match        tieba.baidu.com/*
 // @grant        none
 // ==/UserScript==
 
@@ -12,7 +13,6 @@
     'use strict';
 
     // Your code here...
-
     String.prototype.startWith=function(str){
         if(str==null||str==""||this.length==0||str.length>this.length)
             return false;
@@ -60,14 +60,6 @@
         var signBtn = elements[0];
         signBtn.click();
         signBtn.click();
-    }
-    elements = document.getElementsByClassName("aside_region my_app j_encourage_entry");
-    if (elements && elements.length > 0)
-    {
-        var myapp = elements[0];
-        if (myapp.className.startWith("aside_region"))
-        console.log("%s %s", myapp.className, myapp.tagName);
-        myapp.parentElement.removeChild(myapp);
     }
 
     // 移除部分元素
