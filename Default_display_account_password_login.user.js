@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         默认显示账号密码登录
 // @namespace    http://tampermonkey.net/
-// @version      0.41
+// @version      0.50
 // @description  Default display account password login.
 // @author       lfeng
 // @supportURL   https://github.com/lfeng1420/TamperMonkeyScript
@@ -11,6 +11,8 @@
 // @match        *://login.xiami.com/*
 // @match        *://passport.xiami.com/*
 // @match        *://pan.baidu.com/
+// @match        *://passport.jd.com/*
+
 // @grant        none
 // ==/UserScript==
 
@@ -207,6 +209,25 @@
         }, 50);
     }
 
+    function Handlejd()
+    {
+        setTimeout(function(){
+            //点击账户登录按钮
+            var array = document.getElementsByClassName("login-tab");
+            if (array.length === 0)
+            {
+                return;
+            }
+            array[1].click();
+            //显示密码删除按钮
+            var arrClearBtn = document.getElementsByClassName("clear-btn");
+            for (var index = 0; index < arrClearBtn.length; ++index)
+            {
+                arrClearBtn[index].setAttribute("style", "display: inline;");
+            }
+            console.log("Handlejd Succ");
+        }, 500);
+    }
 
     function DoAction()
     {
@@ -231,6 +252,10 @@
 
             case "pan.baidu.com":
                 HandleBaiduYun();
+                break;
+                
+            case "passport.jd.com":
+                Handlejd();
                 break;
 
             default:
