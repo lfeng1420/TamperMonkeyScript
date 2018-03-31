@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         默认显示账号密码登录
 // @namespace    http://tampermonkey.net/
-// @version      0.40
+// @version      0.41
 // @description  Default display account password login.
 // @author       lfeng
-// @supportURL   https://github.com/lfeng1420/
+// @supportURL   https://github.com/lfeng1420/TamperMonkeyScript
 // @match        *://auth.alipay.com/*
 // @match        *://www.alipay.com/
 // @match        *://passport.douyu.com/*
