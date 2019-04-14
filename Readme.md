@@ -10,3 +10,5 @@ TamperMonkeyScript
 * 虾米 （`passport.xiami.com`）<br>
 * 百度网盘 （`pan.baidu.com`）<br>
 * 京东 （`passport.jd.com`）<br>
+* 12306（kyfw.12306.cn）<br>
+* 爱奇艺（www.iqiyi.com） <br>
