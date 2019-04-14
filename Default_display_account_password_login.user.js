@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         默认显示账号密码登录
 // @namespace    http://tampermonkey.net/
-// @version      0.50
+// @version      0.60
 // @description  Default display account password login.
 // @author       lfeng
 // @supportURL   https://github.com/lfeng1420/TamperMonkeyScript
