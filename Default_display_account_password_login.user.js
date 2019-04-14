@@ -22,10 +22,12 @@
 (function() {
     'use strict';
 
-	function getByClassName(szClsName, index = 0, doc = document)
+	function getByClassName(szClsName, index, doc)
 	{
+		doc = doc || document;
+		index = index || 0;
 		var arrElements = doc.getElementsByClassName(szClsName);
-		if (arrElements === null || arrElements.length == 0)
+		if (arrElements === null || arrElements.length === 0)
 		{
 			return null;
 		}
@@ -33,15 +35,18 @@
 		return arrElements[index];
 	}
 
-	function getById(id, doc = document)
+	function getById(id, doc)
 	{
+		doc = doc || document;
 		return doc.getElementById(id);
 	}
 
-	function getByTagName(name, index = 0, doc = document)
+	function getByTagName(name, index, doc)
 	{
+		doc = doc || document;
+		index = index || 0;
 		var arrElements = doc.getElementsByTagName(name);
-		if (arrElements === null || arrElements.length == 0)
+		if (arrElements === null || arrElements.length === 0)
 		{
 			return null;
 		}
@@ -51,7 +56,7 @@
 
 	function hasClass(o, name)
 	{
-		if (o.classList === null || o.classList.length == 0)
+		if (o.classList === null || o.classList.length === 0)
 		{
 			return false;
 		}
@@ -299,7 +304,7 @@
 		}
 
 		var style = loginCode.getAttribute("style");
-		if (style.length != 0 && style.indexOf("display: block;") == -1)
+		if (style.length !== 0 && style.indexOf("display: block;") == -1)
 		{
 			return false;
 		}
@@ -321,7 +326,7 @@
 	function HandleIqiyi()
 	{
 		var elements = document.getElementsByClassName("login-frame");
-		if (elements === null || elements.length == 0)
+		if (elements === null || elements.length === 0)
 		{
 			return false;
 		}
@@ -331,8 +336,7 @@
 		for (var index = 0; index < elements.length; ++index)
 		{
 			var element = elements[index];
-			if (element.getAttribute("class") == "login-frame"
-				&& element.getAttribute("data-loginele") == "codeLogin")
+			if (element.getAttribute("class") == "login-frame" && element.getAttribute("data-loginele") == "codeLogin")
 			{
 				element.setAttribute("class", "login-frame dn");
 				hasLoginFrameFlag = true;
@@ -378,7 +382,7 @@
 		return true;
 	}
 
-	const handle_funcs =
+	var handle_funcs =
 	{
 		"www.alipay.com" : HandleMainAlipay,
 		"auth.alipay.com" : HandleAuthAlipay,
@@ -405,7 +409,7 @@
 
 	function __Main()
 	{
-		if (handle_funcs[location.host] != undefined)
+		if (handle_funcs[location.host] !== undefined)
 		{
 			commonFunc_Loop(handle_funcs[location.host]);
 		}
