@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         默认显示账号密码登录
 // @namespace    http://tampermonkey.net/
-// @version      0.60
+// @version      0.70
 // @description  Default display account password login.
 // @author       lfeng
 // @supportURL   https://github.com/lfeng1420/TamperMonkeyScript
@@ -15,6 +15,15 @@
 // @match        *://passport.jd.com/*
 // @match        *://kyfw.12306.cn/*
 // @match        *://www.iqiyi.com/*
+// @match        *://ziyuan.baidu.com/*
+// @match        *://www.huya.com/*
+// @match        *://www.acfun.cn/*
+// @match        *://ssl.xui.ptlogin2.weiyun.com/*
+// @match        *://xui.ptlogin2.qq.com/*
+// @match        *://wenku.baidu.com/*
+// @match        *://tieba.baidu.com/*
+// @match        *://passport.baidu.com/*
+// @match        *://passport.58.com/*
 
 // @grant        none
 // ==/UserScript==
@@ -96,13 +105,13 @@
 		{
 			video.parentNode.removeChild(video);
 		}
-        
+
 		var poster = getById("J_poster");
 		if (poster !== null)
 		{
 			poster.parentNode.removeChild(poster);
 		}
-        
+
         // 条件：用户点了登录按钮
 		var popbox = getById("J_popbox");
 		if (!popbox || (popbox.getAttribute("class") !== "popbox stat-login"))
@@ -294,7 +303,7 @@
 		loginBtn.click();
 		return true;
 	}
-	
+
 	function Handle12306()
 	{
 		var loginCode = getByClassName("login-code");
@@ -356,31 +365,122 @@
 		return hasLoginFrameFlag;
 	}
 
-	function HandleQzone()
-	{
-		var iframe = getById("login_frame");
-		var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-		var qrlogin = getByClassName("qlogin", innerDoc);
-		if (qrlogin === null)
-		{
-			return false;
-		}
+    function HandleHuya()
+    {
+        var obj = getByClassName("UDBSdkLgn-qrImage");
+        if (obj === null)
+        {
+            return false;
+        }
+        if (obj.getAttribute("src") === null)
+        {
+            return false;
+        }
+        var normalLogin = getByClassName("UDBSdkLgn-inner account login");
+        if (normalLogin !== null)
+        {
+            var classList = normalLogin.getAttribute("class");
+            if (classList.indexOf("UDBSdkLgn-none") != -1)
+            {
+                classList = classList.replace("UDBSdkLgn-none", "");
+                normalLogin.setAttribute("class", classList);
+                var qrLogin = getByClassName("UDBSdkLgn-inner qrCode login");
+                classList = qrLogin.getAttribute("class");
+                qrLogin.setAttribute("class", classList + " UDBSdkLgn-none");
+            }
+        }
 
-		var style = qrlogin.getAttribute("style");
-		console.log("%s", style);
-		if (style.indexOf("dispaly: block") != -1)
-		{
-			style = style.replace("display: block", "display: none");
-			qrlogin.setAttribute("style", style);
+        return true;
+    }
 
-			var normallogin = getByClassName("web_qr_login", innerDoc);
-			style = normallogin.getAttribute("style");
-			style = style.replace("display: none", "display: block");
-			normallogin.setAttribute("style", style);
-		}
+    function HandleAcfun()
+    {
+        var loginSwitch = getById("login-switch");
+        if (loginSwitch === null)
+        {
+            return false;
+        }
+        loginSwitch.click();
+        return true;
+    }
 
-		return true;
-	}
+    function HandleQQ()
+    {
+        var qlogin = getByClassName("web_qr_login");
+        if (qlogin === null)
+        {
+            return false;
+        }
+        var style = qlogin.getAttribute("style");
+        if (style === null)
+        {
+            return false;
+        }
+        if (style.indexOf("display: none") != -1)
+        {
+            var switchBtn = getById("switcher_plogin");
+            if (switchBtn !== null)
+            {
+                switchBtn.click();
+            }
+        }
+        return true;
+    }
+
+    function HandleBaiduCommon()
+    {
+        var loginFrame = getById("passport-login-pop");
+        if (loginFrame === null)
+        {
+            return false;
+        }
+
+        var loginStyle = loginFrame.getAttribute("style");
+        if (loginStyle === null || loginStyle.indexOf("display: none") != -1)
+        {
+            return false;
+        }
+
+        var switchBtn = getByClassName("tang-pass-footerBarULogin pass-link", 0, loginFrame);
+        if (switchBtn !== null)
+        {
+            switchBtn.click();
+        }
+
+        return true;
+    }
+
+    function Handle58()
+    {
+        var qrcodeLogin = getByClassName("qrcodelogin");
+        if (qrcodeLogin === null)
+        {
+            return false;
+        }
+        var style = qrcodeLogin.getAttribute("style");
+        if (style === null)
+        {
+            return false;
+        }
+        if (style.indexOf("display: block") != -1)
+        {
+            var switchBtn = getByClassName("qrcode");
+            if (switchBtn !== null)
+            {
+                switchBtn.click();
+            }
+        }
+    }
+
+    function HandleBaiduPassport()
+    {
+        var switchBtn = getByClassName("tang-pass-footerBarULogin pass-link");
+        if (switchBtn !== null)
+        {
+            switchBtn.click();
+        }
+        return (switchBtn !== null);
+    }
 
 	var handle_funcs =
 	{
@@ -394,6 +494,15 @@
 		"passport.jd.com" : Handlejd,
 		"kyfw.12306.cn" : Handle12306,
 		"www.iqiyi.com" : HandleIqiyi,
+        "www.huya.com" : HandleHuya,
+        "www.acfun.cn" : HandleAcfun,
+        "ssl.xui.ptlogin2.weiyun.com" : HandleQQ,
+        "xui.ptlogin2.qq.com" : HandleQQ,
+        "ziyuan.baidu.com" : HandleBaiduCommon,
+        "wenku.baidu.com" : HandleBaiduCommon,
+		"tieba.baidu.com" : HandleBaiduCommon,
+		"passport.baidu.com" : HandleBaiduPassport,
+        "passport.58.com" : Handle58,
 	};
 
 	function commonFunc_Loop(func)
