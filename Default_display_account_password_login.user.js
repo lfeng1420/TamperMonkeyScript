@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         默认显示账号密码登录
 // @namespace    http://tampermonkey.net/
-// @version      0.70
+// @version      0.80
 // @description  Default display account password login.
 // @author       lfeng
 // @supportURL   https://github.com/lfeng1420/TamperMonkeyScript
@@ -425,7 +425,18 @@
             }
         }
         return true;
-    }
+	}
+	
+	function HandleBaiduZiyuan()
+	{
+		var switchBtn = getByClassName("tang-pass-footerBarULogin pass-link");
+		if (switchBtn !== null)
+		{
+			switchBtn.click();
+		}
+
+		return (switchBtn !== null);
+	}
 
     function HandleBaiduCommon()
     {
@@ -498,7 +509,7 @@
         "www.acfun.cn" : HandleAcfun,
         "ssl.xui.ptlogin2.weiyun.com" : HandleQQ,
         "xui.ptlogin2.qq.com" : HandleQQ,
-        "ziyuan.baidu.com" : HandleBaiduCommon,
+        "ziyuan.baidu.com" : HandleBaiduZiyuan,
         "wenku.baidu.com" : HandleBaiduCommon,
 		"tieba.baidu.com" : HandleBaiduCommon,
 		"passport.baidu.com" : HandleBaiduPassport,
