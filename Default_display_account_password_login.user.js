@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         默认显示账号密码登录
 // @namespace    http://tampermonkey.net/
-// @version      0.80
+// @version      0.90
 // @description  Default display account password login.
 // @author       lfeng
 // @supportURL   https://github.com/lfeng1420/TamperMonkeyScript
@@ -24,6 +24,7 @@
 // @match        *://tieba.baidu.com/*
 // @match        *://passport.baidu.com/*
 // @match        *://passport.58.com/*
+// @match        *://passport.csdn.net/*
 
 // @grant        none
 // ==/UserScript==
@@ -412,6 +413,19 @@
 		return (switchBtn !== null);
 	}
 
+	function HandleCsdn() {
+		var elements = document.getElementsByClassName("text-tab border-right");
+		if (elements === null || elements.length < 2) {
+			return false;
+		}
+		var link = getByTagName("a", 0, elements[1]);
+		if (link !== null) {
+			link.click();
+			return true;
+		}
+		return false;
+	}
+
 	var handle_funcs =
 	{
 		"www.alipay.com": HandleMainAlipay,
@@ -433,6 +447,7 @@
 		"tieba.baidu.com": HandleBaiduCommon,
 		"passport.baidu.com": HandleBaiduPassport,
 		"passport.58.com": Handle58,
+		"passport.csdn.net": HandleCsdn,
 	};
 
 	function commonFunc_Loop(func) {
