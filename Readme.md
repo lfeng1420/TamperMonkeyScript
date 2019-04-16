@@ -30,4 +30,4 @@ TamperMonkeyScript
 
 * 虎牙（www.huya.com，仅第一次点登录有效，后续再调整）
  
- * CSDN（passport.csdn.net）
+* CSDN（passport.csdn.net）
