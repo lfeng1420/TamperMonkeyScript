@@ -20,7 +20,7 @@ TamperMonkeyScript
 
 * 爱奇艺（www.iqiyi.com）
 
-* 百度相关（ziyuan.baidu.com/wenku.baidu.com/tieba.baidu.com/passport.baidu.com）
+* 百度相关（(ziyuan/wenku/tieba/passport).baidu.com/www.baidu.com）
 
 * AcFun（www.acfun.com）
 
