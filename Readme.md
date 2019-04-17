@@ -31,3 +31,11 @@ TamperMonkeyScript
 * 虎牙（www.huya.com，仅第一次点登录有效，后续再调整）
  
 * CSDN（passport.csdn.net）
+
+* 天涯（www.tianya.cn）
+
+* 腾讯企业邮箱（exmail.qq.com）
+
+* 淘宝（login.taobao.com）
+
+* 苏宁（passport.suning.com） 
